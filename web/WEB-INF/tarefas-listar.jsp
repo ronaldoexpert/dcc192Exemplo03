@@ -24,7 +24,13 @@
             <%        
             }
             %>
+        <tfoot>
+            <tr>
+                <td colspan = 2><a href='nova.html'>Nova Tarefas</a></td>
+            </tr>        
+        </tfoot>
         </table>
             
     </body>
+    
 </html>

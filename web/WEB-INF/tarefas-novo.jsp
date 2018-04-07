@@ -9,8 +9,11 @@
         <h1>Nova Tarefa</h1>
         <form method="post">
             <label>Título: <input type="text" name="titulo" value="" /> </label>
-            <label>Descrição: <input type="text" name="descricao" value="" rows=4 /> </label>
-            
+            <br>
+            <label>Descrição:</label>
+            <BR>
+            <textarea name="descricao" rows="5"></textarea> 
+            <br>
             <input type="submit" value="Gavar" />
             <input type="reset" value="Apagar" />
         </form>

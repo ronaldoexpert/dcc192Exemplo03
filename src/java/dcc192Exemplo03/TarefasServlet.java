@@ -39,4 +39,16 @@ public class TarefasServlet extends HttpServlet {
         despachante.forward(request, response);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String titulo = req.getParameter("titulo");
+        String descricao = req.getParameter("descricao");
+        Tarefas tarefa = new Tarefas(titulo, descricao);
+        ListaDeTarefas.getInstance().add(tarefa);
+        resp.sendRedirect("TarefasServlet.html");
+        
+    }
+    
+    
+
 }
