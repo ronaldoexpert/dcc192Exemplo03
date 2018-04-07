@@ -1,41 +1,42 @@
 package dcc192Exemplo03;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author ice
- */
-@WebServlet(urlPatterns = {"/TarefasServlet.html"})
+
+@WebServlet(urlPatterns = {"/TarefasServlet.html", "/nova.html"})
 public class TarefasServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-                
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Lista Tarefas</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Lista Tarefas</h1>");
-            out.println("<ul>");
-            for (Tarefas tarefas : ListaDeTarefas.getInstance()) {
-                out.println("<li>" + tarefas + "</li>");
-            }
-            out.println("</ul>");
-            out.println("</body>");
-            out.println("</html>");
-        } 
+         if("/TarefasServlet.html".equals(request.getServletPath())){
+             listarTarefas(request, response);
+         }else if ("/nova.html".equals(request.getServletPath())){
+            criarTarefaForm(request, response);
+         }
+    }
+
+    private void listarTarefas(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        List<Tarefas> tarefas = new ListaDeTarefas().getInstance();
+        request.setAttribute("tarefas", tarefas);
+
+        RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/tarefas-listar.jsp");
+        despachante.forward(request, response);
+    }
+
+    private void criarTarefaForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Tarefas> tarefas = new ListaDeTarefas().getInstance();
+        request.setAttribute("tarefas", tarefas);
+
+        RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/tarefas-novo.jsp");
+        despachante.forward(request, response);
     }
 
 }

@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="dcc192Exemplo03.ListaDeTarefas"%>
 <%@page import="dcc192Exemplo03.Tarefas"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,15 +11,20 @@
     </head>
     <body>
         <h1>Lista de Tarefas</h1>
-        <ul>
+        <table border = 1>
+            <th>Titulo</th>
+            <th>Descricao</th>
             <%
-                for(Tarefas tarefas : ListaDeTarefas.getInstance()) {
+                for(Tarefas tarefas : (List<Tarefas>) request.getAttribute("tarefas")) {
             %>   
-                <li><%=tarefas.getTitulo()%></li>
+            <tr>
+                <td><%=tarefas.getTitulo()%></td>
+                <td><%=tarefas.getDescricao()%></td>
+            </tr>
             <%        
             }
             %>
-        </ul>
+        </table>
             
     </body>
 </html>
