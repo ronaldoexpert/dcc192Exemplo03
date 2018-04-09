@@ -15,7 +15,7 @@
             <textarea name="descricao" rows="5"></textarea> 
             <br>
             <input type="submit" value="Gavar" />
-            <input type="reset" value="Apagar" />
+            
         </form>
     </body>
 </html>

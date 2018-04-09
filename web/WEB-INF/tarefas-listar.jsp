@@ -12,21 +12,28 @@
     <body>
         <h1>Lista de Tarefas</h1>
         <table border = 1>
+            <th>ID</th>
+            <th>Status</th>
             <th>Titulo</th>
-            <th>Descricao</th>
+            <th colspan = 2>Descricao</th>
             <%
+                int i = 0;
                 for(Tarefas tarefas : (List<Tarefas>) request.getAttribute("tarefas")) {
             %>   
             <tr>
+                <td><%=i%></td>
+                <td><a href='muda-status.html'><%=tarefas.isConcluida()%></a></td>
                 <td><%=tarefas.getTitulo()%></td>
                 <td><%=tarefas.getDescricao()%></td>
+                <td><a href='edita.html?id=<%=i%>'>Editar</a> <a href='apaga.html?id=<%=i%>'>Excluir</a></td>                
             </tr>
-            <%        
-            }
+            <%
+                i++;
+            }            
             %>
         <tfoot>
             <tr>
-                <td colspan = 2><a href='nova.html'>Nova Tarefas</a></td>
+                <td colspan = 5><a href='nova.html'>Nova Tarefas</a></td>
             </tr>        
         </tfoot>
         </table>
