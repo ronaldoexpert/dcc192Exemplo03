@@ -8,7 +8,7 @@ public class Tarefas {
     public Tarefas(String titulo, String descricao) {
         this.titulo = titulo;
         this.descricao = descricao;
-        this.concluida = false;
+        this.concluida = true;
     }
 
     public Tarefas() {

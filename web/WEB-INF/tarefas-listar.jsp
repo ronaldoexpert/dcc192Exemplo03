@@ -22,10 +22,10 @@
             %>   
             <tr>
                 <td><%=i%></td>
-                <td><a href='muda-status.html'><%=tarefas.isConcluida()%></a></td>
+                <td><a href='muda-status.html?id=<%=i%>'><%=tarefas.isConcluida()%></a></td>
                 <td><%=tarefas.getTitulo()%></td>
                 <td><%=tarefas.getDescricao()%></td>
-                <td><a href='edita.html?id=<%=i%>'>Editar</a> <a href='apaga.html?id=<%=i%>'>Excluir</a></td>                
+                <td><a href='edita.html?id=<%=i%>'>Editar</a> <a href='excluir.html?id=<%=i%>'>Excluir</a></td>                
             </tr>
             <%
                 i++;

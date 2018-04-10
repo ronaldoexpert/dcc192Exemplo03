@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(urlPatterns = {"/muda-status.html", "/edita.html", "/TarefasServlet.html", "/nova.html"})
+@WebServlet(urlPatterns = {"/muda-status.html", "/edita.html", "/TarefasServlet.html", "/nova.html", "/excluir.html"})
 public class TarefasServlet extends HttpServlet {
     
     @Override
@@ -24,6 +24,8 @@ public class TarefasServlet extends HttpServlet {
             editaTarefaForm(request, response);
          }else if ("/muda-status.html".equals(request.getServletPath())){
             mudaStatus(request, response);
+         }else if ("/excluir.html".equals(request.getServletPath())){
+            exlcuiTarefaForm(request, response);
          }
     }
 
@@ -52,8 +54,29 @@ public class TarefasServlet extends HttpServlet {
         despachante.forward(request, response);
     }
     private void mudaStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Tarefas> tarefas = new ListaDeTarefas().getInstance();
+        request.setAttribute("tarefas", tarefas);
         
-        RequestDispatcher despachante = request.getRequestDispatcher("TarefasServlet.html");        
+        Tarefas tarefa = new Tarefas(ListaDeTarefas.getInstance().get(Integer.parseInt(request.getParameter("id"))).getTitulo(), ListaDeTarefas.getInstance().get(Integer.parseInt(request.getParameter("id"))).getDescricao());
+            
+        if (!ListaDeTarefas.getInstance().get(Integer.parseInt(request.getParameter("id"))).isConcluida()) {
+            tarefa.setConcluida(true);
+        }else{
+            tarefa.setConcluida(false);
+        }            
+
+        ListaDeTarefas.getInstance().set(Integer.parseInt(request.getParameter("id")), tarefa);
+            
+        RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/tarefas-listar.jsp");        
+        despachante.forward(request, response);
+    }
+    
+    private void exlcuiTarefaForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Tarefas> tarefas = new ListaDeTarefas().getInstance();
+        int i = Integer.parseInt(request.getParameter("id"));
+        request.setAttribute("tarefas", tarefas.get(i));        
+        
+        RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/tarefas-excluir.jsp");        
         despachante.forward(request, response);
     }
 
@@ -70,6 +93,9 @@ public class TarefasServlet extends HttpServlet {
             String descricao = req.getParameter("descricao");
             Tarefas tarefa = new Tarefas(titulo, descricao);
             ListaDeTarefas.getInstance().set(Integer.parseInt(req.getParameter("id")), tarefa);
+        
+        }else if ("/excluir.html".equals(req.getServletPath())){
+            ListaDeTarefas.getInstance().remove(Integer.parseInt(req.getParameter("id")));
         }
         
         resp.sendRedirect("TarefasServlet.html"); 
